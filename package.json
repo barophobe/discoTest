@@ -1,0 +1,16 @@
+{
+  "name": "testdisco",
+  "version": "1.0.0",
+  "description": "",
+  "main": "appDisco.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "disconnect": "^1.2.1",
+    "nodemon": "^1.13.3",
+    "yargs": "^4.8.1"
+  }
+}
