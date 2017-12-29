@@ -40,17 +40,23 @@ var db = new Discogs('Musictrackr/1.0',{
     .then(function(release){
         console.log(release.name);
     });*/
+  db.getArtistReleases(34278)
+    .then(function(response){ 
+        console.log(response.releases);
+    });
+   /* .then(function(artist){
+        console.log(artist.name);
+    })*/
 
-
-
-
-
-
-
-    db.getArtistReleases(59792)
+/*  db.getArtistReleases(59792)
     .then(function(release){ 
         return db.getArtist(release.artists[0].id);
     })
     .then(function(artist){
         console.log(artist.name);
     });
+*/
+
+
+
+  
