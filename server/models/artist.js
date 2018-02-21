@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var Artist = mongoose.model('Artist', {
+  artistsName: String,
 	namevariations: [ String ],
   profile: String,
   releases_url: String,

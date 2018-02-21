@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 
 var Album = mongoose.model('Album', {
+    artistsName: String,
+    myRating: Number,
     albumId: Number,
     styles: [ String ],
     genres: [ String ],

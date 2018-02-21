@@ -7,7 +7,6 @@ var {mongoose} = require('./db/mongoose');
 var {Artist} = require('./models/artist');
 var {Album} = require('./models/album');
 var {User} = require('./models/user');
-/*var artisto = require('../artistF.js');*/
 var Discogs = require('disconnect').Client;
 var artistRoutes = require('./routes/artist');
 var albumRoutes = require('./routes/albums/album');

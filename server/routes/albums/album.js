@@ -7,6 +7,7 @@ var {Album} = require('../../models/album');
 var {User} = require('../../models/user');
 var Discogs = require('disconnect').Client;
 var {MongoClient, ObjectId} = require('mongodb');
+var _ = require('underscore');
 
 var {mongoose} = require('../../db/mongoose');
 var db = new Discogs('Musictrackr/1.0',{
@@ -15,22 +16,48 @@ consumerSecret: process.env.Secret
 })
 .database();
 
+
+router.get('/', function(req, res, next){
+    Album.find()
+        .exec(function(err, albums) {
+            if (err) {
+                return res.status(500).json({
+                    title: 'an error occurred',
+                    error: err
+                });
+            }
+            res.status(200).json({
+                message: 'success',
+                obj: albums
+            });
+        });
+
+}),
+
+
 router.get('/:artist', (req,res) => {
 var artist = req.params.artist;
 artisto.artistRecords(artist, (errorMessage, results) => {
 	if (errorMessage) {
-		res.send(errorMessage);
+		 return res.status(404).json({
+                    title: 'Cannot find Albums!',
+                    error: errorMessage
+                });
 	} else {
 		res.send(JSON.stringify(results.albums,undefined,2));
 	}
 	});
 });
 
+
 router.get('/detail/:master', (req,res) => {
 var master = req.params.master;
 db.getMaster(master).then((masterAlbum) => {
 	var artistId = masterAlbum.artists[0].id;
+	var artistsName = masterAlbum.artists[0].name;
 		var masterAlbum = new Album({
+			artistsName: artistsName,
+			myRating: null,
 			albumId: master,
 			styles: masterAlbum.styles,
 		    genres: masterAlbum.genres,
@@ -54,18 +81,33 @@ db.getMaster(master).then((masterAlbum) => {
 			
 			Album.count({albumId: master}, (err, count) => { 
 			    if(count>0){
-			        return console.log('Album is in collection already!');
+			        return res.status(200).json({
+                    title: 'Album in collection already!',
+                    error: err
+                });
 			    }
 				
 				masterAlbum.save().then(() => {
 
 					Artist.count({id: artistId}, (err, count) => { 
 						if (err) {
-							console.log(err);
-						}
+							 return res.status(500).json({
+				                    title: 'An error occured, Please try again later.',
+				                    error: err
+					                });
+								}
+
 					    if(count === 0){
 					        db.getArtist(artistId, function(err, artistDetails){
-							var artistDetails =new Artist({
+						        	if (err) {
+										 return res.status(500).json({
+						                    title: 'An error occured, Please try again later.',
+						                    error: err    
+						                   });
+										}
+
+							var artistDetails = new Artist({
+								artistsName: artistsName,
 								namevariations: artistDetails.namevariations,
 								profile: artistDetails.profile,
 							    releases_url: artistDetails.releases_url,
@@ -78,18 +120,50 @@ db.getMaster(master).then((masterAlbum) => {
 							    members: artistDetails.members
 							    });
 
-							    artistDetails.save().then(() => {
-								return console.log(JSON.stringify(artistDetails, undefined, 4));
-								});
+							    artistDetails.save();
 							 });
-							res.send(JSON.stringify(masterAlbum, undefined, 4));
+							res.status(201).send(JSON.stringify(masterAlbum, undefined, 4));
 					    }			
 				}, (e) => {
-					res.status(400).send(e);
+					res.status(500).json({
+                    title: 'An error occurred, Please try again later.',
+                    error: e
+                });
 				});
 			});
 		}); 
 	});
+});
+
+router.delete('/repo/:_id', function(req, res, next){
+	var id = req.params._id;
+    Album.findOne({_id:id}, function(err, albums) {
+        if (err) {
+            return res.status(500).json({
+                title: 'An error occurred',
+                error: error
+            });
+        }
+        if (!Album) {
+            return res.status(500).json({
+                title: 'No album found',
+                error: {message: 'Album not found'}
+            });
+
+        }
+        Album.remove({_id:id},function(err, result) {
+            if (err) {
+                return res.status(500).json({
+                    title: 'an error occurred',
+                    error: err
+                });
+            }
+            res.status(200).json({
+                album: 'deleted album',
+                obj: result
+            });
+        });
+    });
 });
 
 module.exports = router;
