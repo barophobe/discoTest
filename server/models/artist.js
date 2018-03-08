@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
+var Schema= mongoose.Schema; 
 
-var Artist = mongoose.model('Artist', {
-  artistsName: String,
-	namevariations: [ String ],
+var schema = new Schema({
+ artistsName: String,
+  namevariations: [ String ],
   profile: String,
   releases_url: String,
   resource_url: String,
@@ -18,9 +19,9 @@ var Artist = mongoose.model('Artist', {
       name: String,
       resource_url: String
     }
-  ],
+  ]
 });
 
-module.exports = {Artist};
+module.exports = mongoose.model('Artist', schema);
 
 

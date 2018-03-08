@@ -2,7 +2,7 @@ const request = require('request');
 
 var artistRecords = (artist, callback) => {
     var encodedArtist = encodeURIComponent(artist);
-    var urlDis = 'https://api.discogs.com/database/search?type=master&format=album&country=uk&artist='+ encodedArtist +'&key='+process.env.Key+'&secret='+process.env.Secret;
+    var urlDis = 'https://api.discogs.com/database/search?type=master&format=album&country=us&artist='+ encodedArtist +'&key='+process.env.Key+'&secret='+process.env.Secret;
     request({  
       url: urlDis,
       headers: {'User-Agent': 'Musictrackr/1.0'},

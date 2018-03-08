@@ -4,12 +4,13 @@ var bodyParser = require('body-parser');
 var {MongoClient, ObjectId} = require('mongodb');
 
 var {mongoose} = require('./db/mongoose');
-var {Artist} = require('./models/artist');
-var {Album} = require('./models/album');
-var {User} = require('./models/user');
+var Artist = require('./models/artist');
+var Album = require('./models/album');
+var User = require('./models/user');
 var Discogs = require('disconnect').Client;
 var artistRoutes = require('./routes/artist');
 var albumRoutes = require('./routes/albums/album');
+var userRoutes = require('./routes/user');
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use(function (req, res, next) {
 
 app.use(bodyParser.json());
 app.use('/artist', artistRoutes);
+app.use('/user', userRoutes);
 app.use('/albums', albumRoutes);
 
 app.listen(3000, () => {

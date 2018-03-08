@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
+var Schema= mongoose.Schema; 
 
-var Album = mongoose.model('Album', {
+var schema = new Schema({
     artistsName: String,
     myRating: Number,
     albumId: Number,
@@ -49,6 +50,4 @@ var Album = mongoose.model('Album', {
     data_quality: String
 });
 
-module.exports = {Album};
-
-
+module.exports = mongoose.model('Album', schema);
