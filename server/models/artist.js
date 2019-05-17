@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
-var Schema= mongoose.Schema; 
+const mongoose = require('mongoose');
+const Schema= mongoose.Schema;
 
-var schema = new Schema({
+const schema = new Schema({
  artistsName: String,
   namevariations: [ String ],
   profile: String,
@@ -23,5 +23,3 @@ var schema = new Schema({
 });
 
 module.exports = mongoose.model('Artist', schema);
-
-

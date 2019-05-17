@@ -1,6 +1,6 @@
 const {mongoose} = require('../db/mongoose');
 var Schema= mongoose.Schema;
-var mongooseUniqueValidator = require('mongoose-unique-validator');
+/*var mongooseUniqueValidator = require('mongoose-unique-validator');*/
 
 var schema = new Schema({
 	firstName: { type: String, trim: true, required: true },
@@ -11,7 +11,7 @@ var schema = new Schema({
   artists: [{type: Schema.Types.ObjectId, ref: 'Artist'}]
 });
 
-schema.plugin(mongooseUniqueValidator);
+/*schema.plugin(mongooseUniqueValidator);*/
 
 module.exports = mongoose.model("User", schema); 
 

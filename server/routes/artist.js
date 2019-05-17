@@ -4,13 +4,15 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 var Discogs = require('disconnect').Client;
 var Artist = require('../models/artist');
-var db = new Discogs('Musictrackr/1.0',{
+var db = new Discogs('soundtrackr/1.0',{
 consumerKey: process.env.Key, 
 consumerSecret: process.env.Secret
 })
 .database();
 
-/*  router.use('/', function(req, res, next) {
+/*  
+
+router.use('/', function(req, res, next) {
         jwt.verify(req.query.token, 'freagra', function(err, decoded) {
             if (err) {
                 return res.status(401).json({
@@ -18,7 +20,7 @@ consumerSecret: process.env.Secret
                     error: err
                 });
             }
-            next();
+            next();I
         })
     });*/
 
@@ -41,10 +43,10 @@ Artist.find({id:artistId})
 
 router.get('/:artist', (req,res) => {
 var artist = req.params.artist;
-db.search(artist, function(err, data){
+db.search(artist, function(err, data) {
      if (err) {
                 return res.status(500).json({
-                    title: 'an error occurred',
+                    title: 'an error has occurred',
                     error: err
                 });
             }
@@ -54,10 +56,6 @@ db.search(artist, function(err, data){
     	res.send(JSON.stringify(outPut, undefined, 4));
     	});
     });
-
-
-
-
 
 
    router.use('/', function(req, res, next) {
@@ -71,10 +69,6 @@ db.search(artist, function(err, data){
             next();
         })
     });
-
-
-
-
 
 
 
@@ -94,4 +88,3 @@ db.getArtist(artistId, function(err, data){
     });
 
 module.exports = router;
-
