@@ -30,10 +30,10 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(bodyParser.json());
+/*app.use(bodyParser.json());
 app.use('/artist', artistRoutes);
 app.use('/user', userRoutes);
-app.use('/albums', albumRoutes);
+app.use('/albums', albumRoutes);*/
 
 app.listen(3000, () => {
 	console.log('Started on port 3000');
