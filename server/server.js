@@ -30,7 +30,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-
+/* edo testing stuff */
 
 app.use(bodyParser.json());
 app.use('/artist', artistRoutes);
