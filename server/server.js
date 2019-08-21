@@ -18,7 +18,7 @@ mongoose.Promise = Promise;
 var app = express();
 
 var db = new Discogs('soundtrackr/1.0',{
-consumerKey: process.env.Key, 
+consumerKey: process.env.Key,
 consumerSecret: process.env.Secret
 })
 .database();
@@ -29,6 +29,8 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
     next();
 });
+
+
 
 app.use(bodyParser.json());
 app.use('/artist', artistRoutes);
